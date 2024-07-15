@@ -30,5 +30,9 @@ if __name__ == '__main__':
 
     passenger_predictions = pd.read_csv(args.passengers_up_predictions, encoding="ISO-8859-8")
     gold_passenger_up = pd.read_csv(args.gold_passengers_up, encoding="ISO-8859-8")
-    mse_boarding = eval_boardings(passenger_predictions, gold_passenger_up)
-    print(f"MSE for boardings: {mse_boarding}")
+    if set(passenger_predictions["trip_id_unique_station"]) != set(gold_passenger_up["trip_id_unique_station"]):
+        print("\n*** ERROR ***")
+        print("trip_id_unique_station values are not the same in the two files, cannot run the evaluation script")
+    else:
+        mse_boarding = eval_boardings(passenger_predictions, gold_passenger_up)
+        print(f"MSE for boardings: {mse_boarding}")

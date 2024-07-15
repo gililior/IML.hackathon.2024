@@ -32,5 +32,9 @@ if __name__ == '__main__':
 
     importance_predictions = pd.read_csv(args.importance_ratings_predictions)
     gold_importance = pd.read_csv(args.gold_importance_ratings)
-    mse_importance = eval_importance(importance_predictions, gold_importance)
-    print(f"MSE for importance: {mse_importance}")
+    if set(importance_predictions["unique_id"]) != set(gold_importance["unique_id"]):
+        print("\n*** ERROR ***")
+        print("unique_id values are not the same in the two files, cannot run the evaluation script")
+    else:
+        mse_importance = eval_importance(importance_predictions, gold_importance)
+        print(f"MSE for importance: {mse_importance}")

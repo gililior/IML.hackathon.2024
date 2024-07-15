@@ -30,5 +30,9 @@ if __name__ == '__main__':
 
     duration_predictions = pd.read_csv(args.trip_duration_predictions, encoding="ISO-8859-8")
     gold_duration = pd.read_csv(args.gold_trip_duration, encoding="ISO-8859-8")
-    mse = eval_duration(duration_predictions, gold_duration)
-    print(f"MSE for duration: {mse}")
+    if set(duration_predictions["trip_id_unique"]) != set(gold_duration["trip_id_unique"]):
+        print("\n*** ERROR ***")
+        print("trip_id_unique values are not the same in the two files, cannot run the evaluation script")
+    else:
+        mse = eval_duration(duration_predictions, gold_duration)
+        print(f"MSE for duration: {mse}")

@@ -29,5 +29,9 @@ if __name__ == '__main__':
 
     match_predictions = pd.read_csv(args.match_predictions)
     gold_match = pd.read_csv(args.gold_match)
-    f1_match_score = eval_match(match_predictions, gold_match)
-    print(f"F1 for match: {round(f1_match_score, 2)}")
+    if set(match_predictions["unique_id"]) != set(gold_match["unique_id"]):
+        print("\n*** ERROR ***")
+        print("unique_id values are not the same in the two files, cannot run the evaluation script")
+    else:
+        f1_match_score = eval_match(match_predictions, gold_match)
+        print(f"F1 for match: {round(f1_match_score, 2)}")
